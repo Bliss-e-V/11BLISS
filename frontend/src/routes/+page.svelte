@@ -1,7 +1,11 @@
 <script>
     import './+layout.svelte';
 
-    let inputValue = ''; // Initialize a variable to hold the input value
+    let inputAdr = '';
+    let inputDate = '';
+    let inputTime = '';
+
+    let inputValue = "Adr: " + inputAdr + " Date: " + inputDate + " Date: " + inputTime; // Initialize a variable to hold the input value
 
     // Function to handle form submission
     function handleSubmit(event) {
@@ -23,7 +27,7 @@
 
 <nav>
     <div id="logo-container" class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-20 pl-11 pr-14 pt-4 inline-flex w-full`}>
-        <img src="" alt="blisspuls-logo">
+        <img src="logo-bliss-pulse.svg" alt="blisspuls-logo">
     </div>
 </nav>
 <div  id="central-container" class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-20 pl-11 pr-14 pt-4 inline-flex w-full`}>
@@ -32,9 +36,17 @@
             <form method="POST"  on:submit={handleSubmit}   >
                 <label>
                     Address
-                    <input name="address" type="text" bind:value={inputValue}>
+                    <input name="address" type="text" bind:value={inputAdr}>
                 </label>
-                <button type="submit">Search</button>
+                <label>
+                    Date
+                    <input name="date" type="date" bind:value={inputDate}>
+                </label>
+                <label>
+                    Time
+                    <input name="time" type="time" bind:value={inputTime}>
+                </label>
+                <button type="submit" class="leading-[normal] drop-shadow-lg text-white text-xl text-center flex justify-center bg-red-400 self-stretch p-3.5 rounded-3xl">Search</button>
             </form>
             <div id="text-container">
                 <p>Lorem impsum</p>
