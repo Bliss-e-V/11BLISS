@@ -39,15 +39,17 @@
         <div id="search-form">
             <form method="POST" on:submit={handleSubmit}>
                 <div class="max-w-md">
-                    <div class="mb-4 focus:border-red-400">
+                    <div class="flex gap-x-4 mb-4 ">
                         <input name="address" placeholder="Enter your location here..." class="leading-[normal] drop-shadow-lg text-gray-900 text-xl text-left flex gap-x-16 justify-end items-center bg-white self-stretch py-4 px-2 rounded-3xl w-full" type="text" bind:value={inputAdr}> <!-- Added w-full -->
                     </div>
-                    <div id="date_time" class="flex gap-x-4 mb-4">
-                        <div class="w-1/2">
-                            <input name="date" class="drop-shadow py-[3px] items-center bg-white self-stretch pl-3 pr-2.5 justify-center flex rounded-3xl w-full" type="date" bind:value={inputDate}> <!-- Added w-full -->
+                    <div id="date_time" class="flex gap-x-4 mb-4 ">
+                        <div class="w-1/2 drop-shadow flex gap-x-4 py-[3px] items-center bg-white pl-3 pr-2.5 justify-between rounded-3xl w-full">
+                            <input name="date" class="" type="date" bind:value={inputDate}>
+                            <img src="calendar-icon.svg" alt="Calendar" width="10%">
                         </div>
-                        <div class="w-1/2">
-                            <input name="time" class="drop-shadow py-[3px] items-center bg-white self-stretch pl-3 pr-2.5 justify-center flex rounded-3xl w-full" type="time" bind:value={inputTime}> <!-- Added w-full -->
+                        <div class="w-1/2 w-1/2 drop-shadow flex gap-x-4 py-[3px] items-center bg-white pl-3 pr-2.5 justify-between rounded-3xl w-full">
+                            <input name="time" class="" type="time" bind:value={inputTime}>
+                            <img src="time-icon.svg" alt="Time" width="10%">
                         </div>
                     </div>
                     <div id="submit_btn">
