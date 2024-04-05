@@ -23,13 +23,13 @@
 </script>
 
 <nav>
-    <div class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-20 pl-11 pr-14 pt-4 inline-flex w-full`}>
-        <p>Hello world</p>
+    <div id="logo-container" class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-20 pl-11 pr-14 pt-4 inline-flex w-full`}>
+        <img src="" alt="blisspuls-logo">
     </div>
 </nav>
-<div class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-20 pl-11 pr-14 pt-4 inline-flex w-full`}>
-    <div >
-        <div>
+<div  id="central-container" class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-20 pl-11 pr-14 pt-4 inline-flex w-full`}>
+    <div id="left-container">
+        <div id="search-form">
             <form method="POST"  on:submit={handleSubmit}   >
                 <label>
                     Address
@@ -37,13 +37,12 @@
                 </label>
                 <button type="submit">Search</button>
             </form>
-            <div>
+            <div id="text-container">
                 <p>Lorem impsum</p>
             </div>
         </div>
 
-        <div>
-
+        <div id="map-container">
             <p>{inputValue}</p>
         </div>
     </div>
