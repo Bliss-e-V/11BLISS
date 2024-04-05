@@ -4,11 +4,19 @@ from typing import Dict, List, Tuple
 import googlemaps
 import numpy as np
 import requests
+import csv
 from googlemaps import Client
 from config import MAPS_API_KEY
 
 gmaps: Client = googlemaps.Client(key=MAPS_API_KEY)
 GMAPS_CHUNK_SIZE: int = 99
+
+
+def tuple_to_dict(lat, long):
+    return {
+        "latitude": lat,
+        "longitude": long,
+    }
 
 
 def get_time_for_dests(
@@ -17,9 +25,12 @@ def get_time_for_dests(
     time: str = "2024-04-03T12:00:00Z",
 ) -> List[Tuple[float, float, int]]:
     chunks = math.ceil(len(destinations) / GMAPS_CHUNK_SIZE)
+
     lat_long_time_list = []
     for i in range(chunks):
-        current_destinations = destinations[i:i+GMAPS_CHUNK_SIZE]
+        current_destinations = destinations[
+            i * GMAPS_CHUNK_SIZE : (i + 1) * GMAPS_CHUNK_SIZE
+        ]
         req = {
             "origins": [
                 {
@@ -50,25 +61,24 @@ def get_time_for_dests(
             "departureTime": time,
         }
 
-        url = (
-            f"https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix?key={MAPS_API_KEY}"
-        )
-        header = {"X-Goog-FieldMask": "duration"}
+        url = f"https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix?key={MAPS_API_KEY}"
+        header = {"X-Goog-FieldMask": "duration,destinationIndex"}
 
         response = requests.post(url=url, json=req, headers=header)
         if response.status_code != 200:
             print(f"Got response {response.status_code} with body {response.json()}")
         response = response.json()
 
-        
-        for dest, res in zip(current_destinations, response):
+        # for dest, res in zip(current_destinations, response):
+        for res in response:
+            dest = current_destinations[res["destinationIndex"]]
             if not "duration" in res:
                 print(f"Empty response for {dest}.")
                 continue
 
             duration = int(res["duration"][:-1])
             lat_long_time_list.append((dest["latitude"], dest["longitude"], duration))
-    print(len(lat_long_time_list), len(destinations))
+
     return lat_long_time_list
 
 
@@ -108,31 +118,30 @@ def build_grid(
     return d
 
 
+def load_grid(path="../data/grid.csv"):
+
+    loaded_grid = []
+
+    with open(path, "r", newline="") as csvfile:
+        reader = csv.reader(csvfile)
+
+        # Skip the header row
+        next(reader)
+
+        # Iterate over the rows and append data to the list
+        for row in reader:
+            loaded_grid.append(tuple_to_dict(float(row[0]), float(row[1])))
+
+    return loaded_grid
+
+
 def get_grid_times(
     start_lat,
     start_long,
-    top_left_lat,
-    top_left_long,
-    bottom_right_lat,
-    bottom_right_long,
-    num_steps,
 ):
-    start = {
-        "longitude": start_long,
-        "latitude": start_lat,
-    }
+    start = tuple_to_dict(start_lat, start_long)
 
-    top_left = {
-        "longitude": top_left_long,
-        "latitude": top_left_lat,
-    }
-
-    bottom_right = {
-        "longitude": bottom_right_long,
-        "latitude": bottom_right_lat,
-    }
-
-    grid_points = build_grid(top_left, bottom_right, num_steps=num_steps)
+    grid_points = load_grid()
 
     times = get_time_for_dests(start, grid_points)
 

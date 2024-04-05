@@ -1,5 +1,3 @@
-
-
 import requests
 
 from flask import Flask, request
@@ -40,31 +38,16 @@ def gridtimes():
     Params:
     - start_lat: Latitude of the starting point
     - start_long: Longitude of the starting point
-    - top_left_lat: Latitude of the top left grid point
-    - top_left_long: Longitude of the top left grid point
-    - bottom_right_lat: Latitude of the bottom right grid point
-    - bottom_right_long: Longitude of the bottom right point
-    - num_steps: Resolution of the grid
     Returns:
     - List of Triples containing (Latitude, Longitude, time from start)
     """
 
     start_lat = float(request.args["start_lat"])
     start_long = float(request.args["start_long"])
-    top_left_lat = float(request.args["top_left_lat"])
-    top_left_long = float(request.args["top_left_long"])
-    bottom_right_lat = float(request.args["bottom_right_lat"])
-    bottom_right_long = float(request.args["bottom_right_long"])
-    num_steps = int(request.args["num_steps"])
 
     times = get_grid_times(
         start_lat,
         start_long,
-        top_left_lat,
-        top_left_long,
-        bottom_right_lat,
-        bottom_right_long,
-        num_steps,
     )
 
     return (times, 200)
