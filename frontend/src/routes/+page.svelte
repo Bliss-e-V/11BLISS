@@ -9,7 +9,6 @@
       var address = document.getElementsByName('address')[0].value
       var encodedAddress = encodeURIComponent(address)
       console.log(encodedAddress)
-      sleep(1000)
 
       alert('Submitted value: ' + inputValue); // For demonstration purposes, alert the input value
       // .then(response => response.json())
