@@ -22,13 +22,37 @@
 
 </script>
 
-<form method="POST"  on:submit={handleSubmit}   >
-	<label>
-		Address
-		<input name="address" type="text" bind:value={inputValue}>
-	</label>
-	<button type="submit">Search</button>
-</form>
+<nav>
+    <div>
+
+    </div>
+</nav>
+
+<div>
+    <div>
+        <form method="POST"  on:submit={handleSubmit}   >
+            <label>
+                Address
+                <input name="address" type="text" bind:value={inputValue}>
+            </label>
+            <button type="submit">Search</button>
+        </form>
+        <div>
+            <p>Lorem impsum</p>
+        </div>
+    </div>
+
+    <div>
+
+        <p>{inputValue}</p>
+    </div>
+</div>
+
+<footer>
+    <p>hello world</p>
+</footer>
 
 
-<p>{inputValue}</p>
+
+
+
