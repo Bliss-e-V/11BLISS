@@ -31,7 +31,7 @@
 
 <nav>
     <div id="logo-container" class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-5 pl-11 pr-14 pt-4 inline-flex w-full`}>
-        <img src="logo-bliss-pulse-cropped.svg" alt="blisspuls-logo" width="20%">
+        <img src="logo-bliss-pulse.svg" alt="blisspuls-logo" width="20%">
     </div>
 </nav>
 <div  id="central-container" class={`tracking-[0px] font-futura items-start bg-red-100 gap-x-14 flex-row pb-10 pl-11 pr-14 pt-4 inline-flex w-full`}>
