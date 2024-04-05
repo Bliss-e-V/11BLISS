@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+test.ipynb
+
 # C extensions
 *.so
 
@@ -161,3 +163,5 @@ cython_debug/
 *.svelte-kit/
 *package
 *node_modules/
+
+.python-version
