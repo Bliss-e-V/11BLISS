@@ -162,3 +162,6 @@ cython_debug/
 #.idea/
 
 .python-version
+*.ipynb
+.DS_STORE
+test.csv

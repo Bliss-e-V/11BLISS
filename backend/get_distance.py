@@ -1,21 +1,28 @@
+import csv
 import math
+from collections import defaultdict
+from enum import Enum
 from typing import Dict, List, Tuple
 
-import googlemaps
 import numpy as np
 import requests
-import csv
-from googlemaps import Client
+
 from config import MAPS_API_KEY
 
-gmaps: Client = googlemaps.Client(key=MAPS_API_KEY)
 GMAPS_CHUNK_SIZE: int = 99
 
 
-def tuple_to_dict(lat, long):
+class GRID_PATHS(Enum):
+    XL = "../data/grid_step-54.csv"
+    L = "../data/grid_step-38.csv"
+    M = "../data/grid_step-27.csv"
+    S = "../data/grid_step-10.csv"
+
+
+def tuple_to_dict(tup: Tuple[float, float]):
     return {
-        "latitude": lat,
-        "longitude": long,
+        "latitude": tup[0],
+        "longitude": tup[1],
     }
 
 
@@ -71,10 +78,10 @@ def get_time_for_dests(
 
         # for dest, res in zip(current_destinations, response):
         for res in response:
-            dest = current_destinations[res["destinationIndex"]]
-            if not "duration" in res:
-                print(f"Empty response for {dest}.")
+            if not ("duration" in res and "destinationIndex" in res):
+                print(f"Warning: Empty response.")
                 continue
+            dest = current_destinations[res["destinationIndex"]]
 
             duration = int(res["duration"][:-1])
             lat_long_time_list.append((dest["latitude"], dest["longitude"], duration))
@@ -118,8 +125,7 @@ def build_grid(
     return d
 
 
-def load_grid(path="../data/grid.csv"):
-
+def load_grid(path: str = "../data/grid.csv"):
     loaded_grid = []
 
     with open(path, "r", newline="") as csvfile:
@@ -130,19 +136,68 @@ def load_grid(path="../data/grid.csv"):
 
         # Iterate over the rows and append data to the list
         for row in reader:
-            loaded_grid.append(tuple_to_dict(float(row[0]), float(row[1])))
+            loaded_grid.append(tuple_to_dict((float(row[0]), float(row[1]))))
 
     return loaded_grid
 
 
-def get_grid_times(
-    start_lat,
-    start_long,
-):
-    start = tuple_to_dict(start_lat, start_long)
+def compute_average_duration(lists: List[List[Tuple[float, float, int]]]):
+    # Dictionary to store durations for each latitude-longitude pair
+    durations_dict = defaultdict(list)
 
-    grid_points = load_grid()
+    # Populate the durations dictionary
+    for lst in lists:
+        for lat, lon, duration in lst:
+            durations_dict[(lat, lon)].append(duration)
 
-    times = get_time_for_dests(start, grid_points)
+    # Calculate average duration for each latitude-longitude pair
+    average_durations = {}
+    for (lat, lon), durations in durations_dict.items():
+        average_duration = sum(durations) / len(durations)
+        average_durations[(lat, lon)] = average_duration
+
+    times = [(lat, lon, duration) for (lat, lon), duration in average_durations.items()]
+
+    return times
+
+
+def compute_max_duration(lists: List[List[Tuple[float, float, int]]]):
+    # Dictionary to store durations for each latitude-longitude pair
+    durations_dict = defaultdict(list)
+
+    # Populate the durations dictionary
+    for lst in lists:
+        for lat, lon, duration in lst:
+            durations_dict[(lat, lon)].append(duration)
+
+    # Calculate average duration for each latitude-longitude pair
+    max_durations = {}
+    for (lat, lon), durations in durations_dict.items():
+        max_duration = max(durations)
+        max_durations[(lat, lon)] = max_duration
+
+    times = [(lat, lon, duration) for (lat, lon), duration in max_durations.items()]
+
+    return times
+
+
+def get_grid_times(starts: List[Tuple[float, float]], average_mode: str = "max"):
+    starts = [tuple_to_dict(start) for start in starts]
+
+    if len(starts) > 2:
+        grid_points = load_grid(path=GRID_PATHS.M.value)
+    elif len(starts) > 1:
+        grid_points = load_grid(path=GRID_PATHS.L.value)
+    else:
+        grid_points = load_grid(path=GRID_PATHS.XL.value)
+
+    times = [get_time_for_dests(start, grid_points) for start in starts]
+    if len(starts) == 1:
+        return times[0]
+
+    if average_mode == "max":
+        times = compute_max_duration(times)
+    elif average_mode == "average":
+        times = compute_average_duration(times)
 
     return times
