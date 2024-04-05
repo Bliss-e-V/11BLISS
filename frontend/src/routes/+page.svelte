@@ -23,32 +23,33 @@
 </script>
 
 <nav>
-    <div>
-
+    <div class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-20 pl-11 pr-14 pt-4 inline-flex w-full`}>
+        <p>Hello world</p>
     </div>
 </nav>
-
-<div>
-    <div>
-        <form method="POST"  on:submit={handleSubmit}   >
-            <label>
-                Address
-                <input name="address" type="text" bind:value={inputValue}>
-            </label>
-            <button type="submit">Search</button>
-        </form>
+<div class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-20 pl-11 pr-14 pt-4 inline-flex w-full`}>
+    <div >
         <div>
-            <p>Lorem impsum</p>
+            <form method="POST"  on:submit={handleSubmit}   >
+                <label>
+                    Address
+                    <input name="address" type="text" bind:value={inputValue}>
+                </label>
+                <button type="submit">Search</button>
+            </form>
+            <div>
+                <p>Lorem impsum</p>
+            </div>
         </div>
-    </div>
 
-    <div>
+        <div>
 
-        <p>{inputValue}</p>
+            <p>{inputValue}</p>
+        </div>
     </div>
 </div>
 
-<footer>
+<footer class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-20 pl-11 pr-14 pt-4 inline-flex w-full`}>
     <p>hello world</p>
 </footer>
 
