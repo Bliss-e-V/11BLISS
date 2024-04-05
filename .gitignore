@@ -161,3 +161,4 @@ cython_debug/
 *.svelte-kit/
 *package
 *node_modules/
+*.icloud
