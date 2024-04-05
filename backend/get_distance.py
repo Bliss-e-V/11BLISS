@@ -71,10 +71,10 @@ def get_time_for_dests(
 
         # for dest, res in zip(current_destinations, response):
         for res in response:
-            dest = current_destinations[res["destinationIndex"]]
-            if not "duration" in res:
-                print(f"Empty response for {dest}.")
+            if not ("duration" in res and "destinationIndex" in res):
+                print(f"Warning: Empty response.")
                 continue
+            dest = current_destinations[res["destinationIndex"]]
 
             duration = int(res["duration"][:-1])
             lat_long_time_list.append((dest["latitude"], dest["longitude"], duration))
