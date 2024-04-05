@@ -1,3 +1,4 @@
+import math
 from typing import Dict, List, Tuple
 
 import googlemaps
@@ -7,6 +8,7 @@ from googlemaps import Client
 from config import MAPS_API_KEY
 
 gmaps: Client = googlemaps.Client(key=MAPS_API_KEY)
+GMAPS_CHUNK_SIZE: int = 99
 
 
 def get_time_for_dests(
@@ -14,55 +16,60 @@ def get_time_for_dests(
     destinations: List[Dict[str, float]],
     time: str = "2024-04-03T12:00:00Z",
 ) -> List[Tuple[float, float, int]]:
-    req = {
-        "origins": [
-            {
-                "waypoint": {
-                    "location": {
-                        "latLng": {
-                            "latitude": start["latitude"],
-                            "longitude": start["longitude"],
+    chunks = math.ceil(len(destinations) / GMAPS_CHUNK_SIZE)
+    lat_long_time_list = []
+    for i in range(chunks):
+        current_destinations = destinations[i:i+GMAPS_CHUNK_SIZE]
+        req = {
+            "origins": [
+                {
+                    "waypoint": {
+                        "location": {
+                            "latLng": {
+                                "latitude": start["latitude"],
+                                "longitude": start["longitude"],
+                            }
                         }
                     }
                 }
-            }
-        ],
-        "destinations": [
-            {
-                "waypoint": {
-                    "location": {
-                        "latLng": {
-                            "latitude": dest["latitude"],
-                            "longitude": dest["longitude"],
+            ],
+            "destinations": [
+                {
+                    "waypoint": {
+                        "location": {
+                            "latLng": {
+                                "latitude": dest["latitude"],
+                                "longitude": dest["longitude"],
+                            }
                         }
                     }
                 }
-            }
-            for dest in destinations
-        ],
-        "travelMode": "TRANSIT",
-        "departureTime": time,
-    }
+                for dest in current_destinations
+            ],
+            "travelMode": "TRANSIT",
+            "departureTime": time,
+        }
 
-    url = (
-        f"https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix?key={MAPS_API_KEY}"
-    )
-    header = {"X-Goog-FieldMask": "duration"}
+        url = (
+            f"https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix?key={MAPS_API_KEY}"
+        )
+        header = {"X-Goog-FieldMask": "duration"}
 
-    response = requests.post(url=url, json=req, headers=header)
-    assert response.status_code == 200, f"Got response {response.status_code}"
-    response = response.json()
+        response = requests.post(url=url, json=req, headers=header)
+        if response.status_code != 200:
+            print(f"Got response {response.status_code} with body {response.json()}")
+        response = response.json()
 
-    d = []
-    for dest, res in zip(destinations, response):
-        if not "duration" in res:
-            print(f"Empty response for {dest}.")
-            continue
+        
+        for dest, res in zip(current_destinations, response):
+            if not "duration" in res:
+                print(f"Empty response for {dest}.")
+                continue
 
-        duration = int(res["duration"][:-1])
-        d.append((dest["latitude"], dest["longitude"], duration))
-
-    return d
+            duration = int(res["duration"][:-1])
+            lat_long_time_list.append((dest["latitude"], dest["longitude"], duration))
+    print(len(lat_long_time_list), len(destinations))
+    return lat_long_time_list
 
 
 # LONG = X
