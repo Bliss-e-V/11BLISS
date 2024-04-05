@@ -52,7 +52,6 @@ def get_time_for_dests(
     response = requests.post(url=url, json=req, headers=header)
     assert response.status_code == 200, f"Got response {response.status_code}"
     response = response.json()
-    print(response)
 
     d = []
     for dest, res in zip(destinations, response):
@@ -127,7 +126,6 @@ def get_grid_times(
     }
 
     grid_points = build_grid(top_left, bottom_right, num_steps=num_steps)
-    print("len", len(grid_points))
 
     times = get_time_for_dests(start, grid_points)
 

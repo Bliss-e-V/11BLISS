@@ -50,7 +50,6 @@ def gridtimes():
     - List of Triples containing (Latitude, Longitude, time from start)
     """
 
-    print(request.args)
     start_lat = float(request.args["start_lat"])
     start_long = float(request.args["start_long"])
     top_left_lat = float(request.args["top_left_lat"])
