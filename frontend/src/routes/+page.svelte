@@ -1,6 +1,12 @@
+<svelte:head>
+	<script defer async
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc1XXKm-fFJTte3f1B1-qwoTKHYgT3eHo&callback=initMap">
+	</script>
+</svelte:head>
+
 <script>
     import './+layout.svelte';
-
+    import Map from './Map.svelte';
     let inputValue = ''; // Initialize a variable to hold the input value
 
     // Function to handle form submission
@@ -42,6 +48,7 @@
         </div>
 
         <div id="map-container">
+            <Map></Map>
             <p>{inputValue}</p>
         </div>
     </div>
