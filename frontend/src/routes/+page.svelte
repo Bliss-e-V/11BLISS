@@ -10,7 +10,7 @@
     let inputAdr = '';
     let inputDate = '';
     let inputTime = '';
-    
+
     // Function to handle form submission
     function handleSubmit(event) {
       event.preventDefault(); // Prevent the default form submission behavior
@@ -18,7 +18,7 @@
       var encodedAddress = encodeURIComponent(address)
       console.log(encodedAddress)
 
-      alert('Submitted value: ' + inputValue); // For demonstration purposes, alert the input value
+      alert('Submitted adress: ' + inputAdr); // For demonstration purposes, alert the input value
       // .then(response => response.json())
       // fetch('http://localhost:5000/geocoding?address=' + encodedAddress)
       // .then(data => {
@@ -59,7 +59,9 @@
 
         <div id="map-container">
             <Map></Map>
-            <p>{inputValue}</p>
+            <p>{inputAdr}</p>
+            <p>{inputDate}</p>
+            <p>{inputTime}</p>
         </div>
     </div>
 </div>
