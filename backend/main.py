@@ -18,7 +18,6 @@ def geocoding():
     - JSON response from the Google Geocoding API
     """
 
-    print(request.args)
     search = request.args["search"]
 
     if not search:
