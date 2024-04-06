@@ -3,6 +3,7 @@ import math
 from collections import defaultdict
 from enum import Enum
 from typing import Dict, List, Tuple
+from functools import lru_cache
 
 import numpy as np
 import requests
@@ -181,7 +182,9 @@ def compute_max_duration(lists: List[List[Tuple[float, float, int]]]):
     return times
 
 
-def get_grid_times(starts: List[Tuple[float, float]], average_mode: str = "max"):
+@lru_cache(maxsize=128)
+def get_grid_times(starts: Tuple[Tuple[float, float]], average_mode: str = "max"):
+    print("Getting grid times")
     starts = [tuple_to_dict(start) for start in starts]
 
     if len(starts) > 2:
