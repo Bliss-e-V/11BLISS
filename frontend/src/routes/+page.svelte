@@ -2,18 +2,14 @@
 	import './+layout.svelte';
 	import Map from './Map.svelte';
 	import SearchForm from './SearchForm.svelte'; // Import the new components
-
 	let heatmapData = [[52, 13, 10]]; // Initialize heatmapData as an empty array
 	let renderHeatmap = false;
 </script>
 
-<nav>
-	<div
-		id="logo-container"
-		class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-5 pl-11 pr-14 pt-4 inline-flex w-full`}
-	>
-		<img src="logo-bliss-pulse.svg" alt="blisspuls-logo" width="20%" />
-	</div>
+<nav class={`border-b-2 border-slate-950`}>
+    <div id="logo-container" class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-5 pl-11 pr-14 pt-4 inline-flex w-full`}>
+        <img src="logo-bliss-pulse-sonnenbrille.png" alt="blisspuls-logo" width="20%">
+    </div>
 </nav>
 <div
 	id="central-container"
@@ -42,8 +38,8 @@
 	</div>
 </div>
 
-<footer class={`bg-red-100 gap-y-14`}>
-	<div class="text-center">
-		<p><i>Property of Team 3 aka 11Bliss aka Team Memegods</i></p>
-	</div>
+<footer class={`bg-red-100 gap-y-14 pt-4 border-t-2 border-slate-950`}>
+    <div class="text-center">
+        <p>Property of Team 3 aka 11Bliss aka Team Memegods</p>
+    </div>
 </footer>

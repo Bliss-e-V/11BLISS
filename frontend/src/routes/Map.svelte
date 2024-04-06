@@ -1,18 +1,13 @@
 <script>
-	import retro_style from './map-styles.js';
-
-	import { ENV_OBJ } from './env.js';
-
-	export let heatmapData;
-	export let renderHeatmap;
-	// const { HeatmapLayer, WeightedLocation } = google.maps.importLibrary('visualization');
-
-	let container;
-	let map;
-	let zoom = 13.2;
-	let center = { lat: 52.51888443, lng: 13.39384 };
-
-	import { onMount } from 'svelte';
+   let container;
+   let map;
+   let zoom = 13.2;
+   let center = {lat: 52.51888443, lng: 13.39384};
+   export let heatmapData;
+   export let renderHeatmap;
+   import retro_style from './map-styles.js'
+   import { onMount } from 'svelte';
+   import { ENV_OBJ } from './env.js';
 
 	onMount(async () => {
 		map = new google.maps.Map(container, {
@@ -20,6 +15,9 @@
 			center,
 			styles: retro_style
 		});
+        const transitLayer = new google.maps.TransitLayer();
+
+        transitLayer.setMap(map);
 	});
 
 	function plotHeatmap() {
@@ -57,6 +55,7 @@
 		}
 		// heatmap.setMap(map);
 	}
+
 </script>
 
 <svelte:head>
