@@ -165,3 +165,9 @@ cython_debug/
 *node_modules/
 
 .python-version
+<<<<<<< HEAD
+=======
+*.ipynb
+.DS_STORE
+test.csv
+>>>>>>> 6b905f2872c4ed6516b4cbb509d1568daae3a1ab
