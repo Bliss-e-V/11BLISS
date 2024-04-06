@@ -1,5 +1,8 @@
 <script>
 	import retro_style from './map-styles.js';
+
+	import { ENV_OBJ } from './env.js';
+
 	export let heatmapData;
 	export let renderHeatmap;
 	// const { HeatmapLayer, WeightedLocation } = google.maps.importLibrary('visualization');
@@ -60,7 +63,7 @@
 	<script
 		defer
 		async
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc1XXKm-fFJTte3f1B1-qwoTKHYgT3eHo&libraries=visualization&callback=onMount"
+		src="https://maps.googleapis.com/maps/api/js?key={ENV_OBJ.MAPS_API_KEY}&libraries=visualization&callback=onMount"
 	>
 	</script>
 </svelte:head>

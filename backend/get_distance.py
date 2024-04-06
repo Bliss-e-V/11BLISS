@@ -187,12 +187,13 @@ def get_grid_times(starts: Tuple[Tuple[float, float]], average_mode: str = "max"
     print("Getting grid times")
     starts = [tuple_to_dict(start) for start in starts]
 
-    if len(starts) > 2:
-        grid_points = load_grid(path=GRID_PATHS.M.value)
-    elif len(starts) > 1:
-        grid_points = load_grid(path=GRID_PATHS.L.value)
-    else:
-        grid_points = load_grid(path=GRID_PATHS.XL.value)
+    grid_points = load_grid(path=GRID_PATHS.M.value)
+    # if len(starts) > 2:
+    #     grid_points = load_grid(path=GRID_PATHS.M.value)
+    # elif len(starts) > 1:
+    #     grid_points = load_grid(path=GRID_PATHS.L.value)
+    # else:
+    #     grid_points = load_grid(path=GRID_PATHS.XL.value)
 
     times = [get_time_for_dests(start, grid_points) for start in starts]
     if len(starts) == 1:
