@@ -121,7 +121,7 @@
         </div>
     </div>
 
-    <div id="map-container">
+    <div id="map-container" class="m-auto h-full">
         <Map></Map>
     </div>
 </div>
