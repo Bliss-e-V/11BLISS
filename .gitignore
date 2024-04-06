@@ -165,3 +165,10 @@ cython_debug/
 *.ipynb
 .DS_STORE
 test.csv
+todo.md
+node_modules/
+
+
+
+
+

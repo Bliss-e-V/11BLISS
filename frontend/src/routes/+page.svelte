@@ -22,13 +22,7 @@
       var encodedAddress = encodeURIComponent(address)
       console.log(encodedAddress)
 
-      alert('Submitted adress: ' + inputAdr); // For demonstration purposes, alert the input value
-      // .then(response => response.json())
-      // fetch('http://localhost:5000/geocoding?address=' + encodedAddress)
-      // .then(data => {
-      //     console.log(data)
-      // })
-
+      alert('Submitted adress: ' + inputAdr);
     }
 
     let addressCount = 1; // Track the number of address fields added
@@ -63,7 +57,7 @@
 
 </script>
 
-<nav>
+<nav class={`border-b-2 border-slate-950`}>
     <div id="logo-container" class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-5 pl-11 pr-14 pt-4 inline-flex w-full`}>
         <img src="logo-bliss-pulse.svg" alt="blisspuls-logo" width="20%">
     </div>
@@ -101,7 +95,7 @@
                 </div>
             </form>
 
-            <div id="text-container" class={`leading-[normal] text-[15px] text-justify`}>
+            <div id="text-container" class={`leading-[normal] text-[18px] text-justify`}>
                 <p><b>Welcome to BlissPulse &ndash; &quot;Where's the Heat?&quot;</b></p><br>
 
                 <p><i>Discover Berlin's Hidden Gems, Fast.</i></p><br>
@@ -126,7 +120,7 @@
     </div>
 </div>
 
-<footer class={`bg-red-100 gap-y-14`}>
+<footer class={`bg-red-100 gap-y-14 pt-4 border-t-2 border-slate-950`}>
     <div class="text-center">
         <p><i>Property of Team 3 aka 11Bliss aka Team Memegods</i></p>
     </div>

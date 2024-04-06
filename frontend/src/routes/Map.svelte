@@ -12,6 +12,10 @@
            center,
            styles: retro_style
        });
+       const transitLayer = new google.maps.TransitLayer();
+
+       transitLayer.setMap(map);
+
    });
 </script>
 
