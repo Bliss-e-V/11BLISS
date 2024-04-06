@@ -29,5 +29,11 @@
 		"typescript": "^5.0.0",
 		"vite": "^5.0.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@googlemaps/js-api-loader": "^1.16.6",
+		"dotenv": "^16.4.5",
+		"google": "^2.1.0",
+		"googleapis": "^134.0.0"
+	}
 }

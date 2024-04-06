@@ -1,60 +1,9 @@
-<svelte:head>
-	<script defer async
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc1XXKm-fFJTte3f1B1-qwoTKHYgT3eHo&callback=initMap">
-	</script>
-</svelte:head>
-
 <script>
-    import './+layout.svelte';
-    import Map from './Map.svelte';
-    import Switch from './Switch.svelte'
-
-	let switchValue;
-
-    let inputAdr = '';
-    let inputDate = '';
-    let inputTime = '';
-
-    // Function to handle form submission
-    function handleSubmit(event) {
-      event.preventDefault(); // Prevent the default form submission behavior
-      var address = document.getElementsByName('address')[0].value
-      var encodedAddress = encodeURIComponent(address)
-      console.log(encodedAddress)
-
-      alert('Submitted adress: ' + inputAdr);
-    }
-
-    let addressCount = 1; // Track the number of address fields added
-
-    function addAddress() {
-        if (addressCount < 4) { // Maximum 4 addresses allowed
-            const addressContainer = document.getElementById('address_container');
-            const newAddressInput = document.createElement('div');
-            newAddressInput.innerHTML = `
-                <div class="flex gap-x-4 mb-4">
-                    <input name="address${addressCount + 1}" placeholder="Enter your location here..." class="leading-[normal] drop-shadow-lg text-blue-600 text-left flex gap-x-16 justify-end items-center bg-white self-stretch py-4 px-2 rounded-3xl w-full" type="text">
-                    <button type="button" class="remove-address-btn ml-2 leading-[normal] drop-shadow-lg text-red-600 text-left flex justify-center items-center self-stretch py-3 px-4 rounded-3xl">-remove address</button>
-                </div>`;
-            addressContainer.appendChild(newAddressInput);
-            addressCount++;
-            newAddressInput.querySelector('.remove-address-btn').addEventListener('click', () => removeAddress(newAddressInput));
-            if (addressCount >= 4) {
-                document.getElementById('add_address_button_wrapper').style.display = 'none';
-            }
-        }
-    }
-
-    function removeAddress(addressInput) {
-        if (addressCount > 1) { // Minimum 1 address allowed
-            addressInput.remove();
-            addressCount--;
-            if (addressCount < 4) {
-                document.getElementById('add_address_button_wrapper').style.display = 'flex';
-            }
-        }
-    }
-
+	import './+layout.svelte';
+	import Map from './Map.svelte';
+	import SearchForm from './SearchForm.svelte'; // Import the new components
+	let heatmapData = [[52, 13, 10]]; // Initialize heatmapData as an empty array
+	let renderHeatmap = false;
 </script>
 
 <nav class={`border-b-2 border-slate-950`}>
@@ -62,71 +11,35 @@
         <img src="logo-bliss-pulse.svg" alt="blisspuls-logo" width="20%">
     </div>
 </nav>
-<div  id="central-container" class={`tracking-[0px] font-futura items-start bg-red-100 gap-x-14 flex-row pb-10 pl-11 pr-14 pt-4 inline-flex w-full`}>
-    <div id="left-container">
-        <div id="search-form">
-            <form method="POST" on:submit={handleSubmit}>
-                <div class="max-w-md">
-                    <div id="switch" class="mb-2">
-                        <Switch bind:value={switchValue} label="" design="inner" />
-                    </div>
-                    <div id="address_container">
-                        <!-- Existing address input fields will be appended here -->
-                        <div class="flex gap-x-4 mb-4">
-                            <input name="address" placeholder="Enter your location here..." class="leading-[normal] drop-shadow-lg text-gray-900 text-xl text-left flex gap-x-16 justify-end items-center bg-white self-stretch py-4 px-2 rounded-3xl w-full" type="text" bind:value={inputAdr}>
-                        </div>
-                    </div>
-                    <div class="flex justify-between" id="add_address_button_wrapper">
-                        <button type="button" on:click={addAddress} class="leading-[normal] drop-shadow-lg text-blue-600 text-left flex justify-center items-center self-stretch mb-1">+ add address</button>
-                    </div>
-                    <div id="date_time" class="flex gap-x-4 mb-4 ">
-                        <div class="w-1/2 drop-shadow flex gap-x-4 py-[3px] items-center bg-white pl-3 pr-2.5 justify-between rounded-3xl w-full">
-                            <input name="date" class="" type="date" bind:value={inputDate}>
-                            <img src="calendar-icon.svg" alt="Calendar" width="10%">
-                        </div>
-                        <div class="w-1/2 w-1/2 drop-shadow flex gap-x-4 py-[3px] items-center bg-white pl-3 pr-2.5 justify-between rounded-3xl w-full">
-                            <input name="time" class="" type="time" bind:value={inputTime}>
-                            <img src="time-icon.svg" alt="Time" width="10%">
-                        </div>
-                    </div>
-                    <div id="submit_btn">
-                        <button type="submit" class="mb-4 leading-[normal] drop-shadow-lg text-white text-xl text-center flex justify-center bg-red-400 self-stretch p-3.5 rounded-3xl w-full">Search</button>
-                    </div>
-                </div>
-            </form>
+<div
+	id="central-container"
+	class={`tracking-[0px] font-futura items-start bg-red-100 gap-x-14 flex-row pb-10 pl-11 pr-14 pt-4 inline-flex w-full`}
+>
+	<div id="left-container">
+		<SearchForm
+			on:submit={async (event) => {
+				// Handle the submission event, event.detail.geocode contains the geocode result
 
-            <div id="text-container" class={`leading-[normal] text-[18px] text-justify`}>
-                <p><b>Welcome to BlissPulse &ndash; &quot;Where's the Heat?&quot;</b></p><br>
+				// Handle the submission event, event.detail.geocode contains the geocode result
+				console.log(event.detail.geocode);
+				heatmapData = await fetch(
+					`http://localhost:5000/gridtimes?starts=[(${event.detail.geocode.lat},${event.detail.geocode.lng})]`
+				).then((data) => {
+					return data.json(); // Update the heatmapData variable with the fetched data
+				});
 
-                <p><i>Discover Berlin's Hidden Gems, Fast.</i></p><br>
+				renderHeatmap = true; // Set renderHeatmap to true to display the heatmap
+			}}
+		/>
+	</div>
 
-                <p>BlissPulse turns Berlin's streets into a dynamic heatmap, showing you nearby spots you can reach in a heartbeat. Explore the city like a local, uncovering hotspots loved by Berliners and visitors alike.</p><br>
-
-                <p><b>Your Neighborhood, Redefined</b></p>
-
-                <p>Find hidden gems just around the corner, guided by our dual heatmap &ndash; showing both proximity and popularity. Explore with insight, discovering quick spots, top-rated venues, and beyond-the-obvious gems.</p><br>
-
-                <p><b>Join the Community</b><br>
-                Share your discoveries, rate experiences, and connect with fellow Berlin explorers. With BlissPulse, every street corner tells a story, and your next adventure is just moments away.<br>
-                Ready to Feel the Heat?</p><br>
-
-                <p><i>Welcome to BlissPulse &ndash; Where Berlin's pulse meets your curiosity.</i></p>
-            </div>
-        </div>
-    </div>
-
-    <div id="map-container" class="m-auto h-full">
-        <Map></Map>
-    </div>
+	<div id="right-container">
+		<Map {heatmapData} {renderHeatmap} />
+	</div>
 </div>
 
 <footer class={`bg-red-100 gap-y-14 pt-4 border-t-2 border-slate-950`}>
     <div class="text-center">
-        <p><i>Property of Team 3 aka 11Bliss aka Team Memegods</i></p>
+        <p>Property of Team 3 aka 11Bliss aka Team Memegods</p>
     </div>
 </footer>
-
-
-
-
-

@@ -2,11 +2,16 @@ import os
 
 import requests
 from flask import Flask, request
+from flask_cors import CORS
+from pathlib import Path
+from dotenv import load_dotenv
+from get_distance import get_grid_times
 
 from config import MAPS_API_KEY
 from get_distance import get_grid_times
 
 app = Flask(__name__)
+CORS(app)
 
 
 abspath = os.path.abspath(__file__)
@@ -58,9 +63,9 @@ def grid_times():
 
     if starts:
         try:
-            starts = eval(
-                starts
-            )  # Convert the string representation of list of tuples to actual list of tuples
+            print(starts)
+            starts = eval(starts)
+            # Convert the string representation of list of tuples to actual list of tuples
             if isinstance(starts, list) and all(
                 isinstance(start, tuple)
                 and len(start) == 2
@@ -69,6 +74,7 @@ def grid_times():
             ):
                 if len(starts) > 4 or len(starts) <= 0:
                     return "Invalid starts argument", 400
+                starts = tuple(starts)
                 times = get_grid_times(starts, average_mode)
                 return (times, 200)
 
