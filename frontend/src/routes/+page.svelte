@@ -42,8 +42,8 @@
 	</div>
 </div>
 
-<footer class={`bg-red-100 gap-y-14`}>
-	<div class="text-center">
-		<p><i>Property of Team 3 aka 11Bliss aka Team Memegods</i></p>
-	</div>
+<footer class={`bg-red-100 text-red-400 gap-y-14`}>
+    <div class="text-center">
+        <p>Property of Team 3 aka 11Bliss aka Team Memegods</p>
+    </div>
 </footer>
