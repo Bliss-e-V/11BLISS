@@ -8,6 +8,8 @@ from flask import Flask, request
 from flask_cors import CORS
 from get_distance import get_grid_times
 
+from config import MAPS_API_KEY
+
 app = Flask(__name__)
 CORS(app)
 

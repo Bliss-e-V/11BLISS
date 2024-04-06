@@ -283,7 +283,7 @@ export default [
         "elementType": "labels",
         "stylers": [
             {
-                "visibility": "off"
+                "visibility": "on"
             }
         ]
     },
@@ -292,7 +292,8 @@ export default [
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#dfd2ae"
+                "color": "#3e91c6", 
+
             }
         ]
     },

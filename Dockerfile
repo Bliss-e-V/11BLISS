@@ -3,13 +3,13 @@ FROM python:3.12
 
 # Set the working directory in the container
 WORKDIR /app
+RUN apt update 
 
 COPY . .
 
-RUN apt update 
 
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
 
 # Run the command to start your application
-CMD ["flask",  "--app",  "main",  "run", "--host",  "0.0.0.0"]
+CMD ["flask",  "--app",  "./backend/main",  "run", "--host",  "0.0.0.0"]
