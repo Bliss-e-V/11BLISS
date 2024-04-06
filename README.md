@@ -1,5 +1,5 @@
 # 11BLISS
-**Welcome to the repository BlissPulse🔥 where a salesman does not have to be NP-hard 🌠**
+**Welcome to the repository BlissPulse🔥 where a salesman does not have to travel NP-hard 🌠**
 
 
 
