@@ -50,7 +50,7 @@
 		var opts = {
 			mode: 'cors'
 		};
-		return fetch('http://localhost:5000/geocoding?search=' + address, opts)
+		return fetch('https://backend-jqv5vhlz6q-ey.a.run.app/geocoding?search=' + address, opts)
 			.then((response) => response.json())
 			.then(async (data) => {
 				return data;
