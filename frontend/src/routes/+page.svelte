@@ -38,9 +38,9 @@
             const addressContainer = document.getElementById('address_container');
             const newAddressInput = document.createElement('div');
             newAddressInput.innerHTML = `
-                <div class="flex gap-x-4 mb-4">
-                    <input name="address${addressCount + 1}" placeholder="Enter your location here..." class="leading-[normal] drop-shadow-lg text-blue-600 text-left flex gap-x-16 justify-end items-center bg-white self-stretch py-4 px-2 rounded-3xl w-full" type="text">
-                    <button type="button" class="remove-address-btn ml-2 leading-[normal] drop-shadow-lg text-red-600 text-left flex justify-center items-center self-stretch py-3 px-4 rounded-3xl">-remove address</button>
+                <div class="flex gap-x-4 mb-2">
+                    <input name="address${addressCount + 1}" placeholder="Enter your location here..." class="leading-[normal] drop-shadow-lg text-red-400 text-left flex gap-x-16 justify-end items-center bg-white self-stretch py-4 px-2 rounded-3xl w-full" type="text">
+                    <button type="button" class="remove-address-btn ml-2 leading-[normal] drop-shadow-lg text-grey-700 text-left flex justify-center items-center self-stretch py-3 px-4 rounded-3xl">- remove address</button>
                 </div>`;
             addressContainer.appendChild(newAddressInput);
             addressCount++;
@@ -68,24 +68,24 @@
         <img src="logo-bliss-pulse.svg" alt="blisspuls-logo" width="20%">
     </div>
 </nav>
-<div  id="central-container" class={`tracking-[0px] font-futura items-start bg-red-100 gap-x-14 flex-row pb-10 pl-11 pr-14 pt-4 inline-flex w-full`}>
+<div  id="central-container" class={`tracking-[0px] items-start bg-red-100 gap-x-14 flex-row pb-10 pl-11 pr-14 pt-4 inline-flex w-full`}>
     <div id="left-container">
         <div id="search-form">
             <form method="POST" on:submit={handleSubmit}>
-                <div class="max-w-md">
+                <div class="max-w-md text-xl mb-14">
                     <div id="switch" class="mb-2">
                         <Switch bind:value={switchValue} label="" design="inner" />
                     </div>
                     <div id="address_container">
                         <!-- Existing address input fields will be appended here -->
-                        <div class="flex gap-x-4 mb-4">
+                        <div class="flex gap-x-4 mb-2">
                             <input name="address" placeholder="Enter your location here..." class="leading-[normal] drop-shadow-lg text-gray-900 text-xl text-left flex gap-x-16 justify-end items-center bg-white self-stretch py-4 px-2 rounded-3xl w-full" type="text" bind:value={inputAdr}>
                         </div>
                     </div>
                     <div class="flex justify-between" id="add_address_button_wrapper">
-                        <button type="button" on:click={addAddress} class="leading-[normal] drop-shadow-lg text-blue-600 text-left flex justify-center items-center self-stretch mb-1">+ add address</button>
+                        <button type="button" on:click={addAddress} class="leading-[normal] drop-shadow-lg text-red-400 text-left flex justify-center items-center self-stretch mb-1">+ add address</button>
                     </div>
-                    <div id="date_time" class="flex gap-x-4 mb-4 ">
+                    <div id="date_time" class="flex gap-x-4 mb-2 ">
                         <div class="w-1/2 drop-shadow flex gap-x-4 py-[3px] items-center bg-white pl-3 pr-2.5 justify-between rounded-3xl w-full">
                             <input name="date" class="" type="date" bind:value={inputDate}>
                             <img src="calendar-icon.svg" alt="Calendar" width="10%">
@@ -96,12 +96,12 @@
                         </div>
                     </div>
                     <div id="submit_btn">
-                        <button type="submit" class="mb-4 leading-[normal] drop-shadow-lg text-white text-xl text-center flex justify-center bg-red-400 self-stretch p-3.5 rounded-3xl w-full">Search</button>
+                        <button type="submit" class="leading-[normal] drop-shadow-lg text-white text-xl text-center flex justify-center bg-red-400 self-stretch p-3.5 rounded-3xl w-full">Search</button>
                     </div>
                 </div>
             </form>
 
-            <div id="text-container" class={`leading-[normal] text-[15px] text-justify`}>
+            <div id="text-container" class={`leading-[normal] text-[16px] text-justify`}>
                 <p><b>Welcome to BlissPulse &ndash; &quot;Where's the Heat?&quot;</b></p><br>
 
                 <p><i>Discover Berlin's Hidden Gems, Fast.</i></p><br>
@@ -126,9 +126,9 @@
     </div>
 </div>
 
-<footer class={`bg-red-100 gap-y-14`}>
+<footer class={`bg-red-100 text-red-400 gap-y-14 font-nunito`}>
     <div class="text-center">
-        <p><i>Property of Team 3 aka 11Bliss aka Team Memegods</i></p>
+        <p>Property of Team 3 aka 11Bliss aka Team Memegods</p>
     </div>
 </footer>
 
