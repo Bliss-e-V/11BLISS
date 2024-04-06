@@ -7,6 +7,10 @@
 <script>
     import './+layout.svelte';
     import Map from './Map.svelte';
+    import Switch from './Switch.svelte'
+
+	let switchValue;
+
     let inputAdr = '';
     let inputDate = '';
     let inputTime = '';
@@ -27,6 +31,36 @@
 
     }
 
+    let addressCount = 1; // Track the number of address fields added
+
+    function addAddress() {
+        if (addressCount < 4) { // Maximum 4 addresses allowed
+            const addressContainer = document.getElementById('address_container');
+            const newAddressInput = document.createElement('div');
+            newAddressInput.innerHTML = `
+                <div class="flex gap-x-4 mb-4">
+                    <input name="address${addressCount + 1}" placeholder="Enter your location here..." class="leading-[normal] drop-shadow-lg text-blue-600 text-left flex gap-x-16 justify-end items-center bg-white self-stretch py-4 px-2 rounded-3xl w-full" type="text">
+                    <button type="button" class="remove-address-btn ml-2 leading-[normal] drop-shadow-lg text-red-600 text-left flex justify-center items-center self-stretch py-3 px-4 rounded-3xl">-remove address</button>
+                </div>`;
+            addressContainer.appendChild(newAddressInput);
+            addressCount++;
+            newAddressInput.querySelector('.remove-address-btn').addEventListener('click', () => removeAddress(newAddressInput));
+            if (addressCount >= 4) {
+                document.getElementById('add_address_button_wrapper').style.display = 'none';
+            }
+        }
+    }
+
+    function removeAddress(addressInput) {
+        if (addressCount > 1) { // Minimum 1 address allowed
+            addressInput.remove();
+            addressCount--;
+            if (addressCount < 4) {
+                document.getElementById('add_address_button_wrapper').style.display = 'flex';
+            }
+        }
+    }
+
 </script>
 
 <nav>
@@ -39,8 +73,17 @@
         <div id="search-form">
             <form method="POST" on:submit={handleSubmit}>
                 <div class="max-w-md">
-                    <div class="flex gap-x-4 mb-4 ">
-                        <input name="address" placeholder="Enter your location here..." class="leading-[normal] drop-shadow-lg text-gray-900 text-xl text-left flex gap-x-16 justify-end items-center bg-white self-stretch py-4 px-2 rounded-3xl w-full" type="text" bind:value={inputAdr}> <!-- Added w-full -->
+                    <div id="switch" class="mb-2">
+                        <Switch bind:value={switchValue} label="" design="inner" />
+                    </div>
+                    <div id="address_container">
+                        <!-- Existing address input fields will be appended here -->
+                        <div class="flex gap-x-4 mb-4">
+                            <input name="address" placeholder="Enter your location here..." class="leading-[normal] drop-shadow-lg text-gray-900 text-xl text-left flex gap-x-16 justify-end items-center bg-white self-stretch py-4 px-2 rounded-3xl w-full" type="text" bind:value={inputAdr}>
+                        </div>
+                    </div>
+                    <div class="flex justify-between" id="add_address_button_wrapper">
+                        <button type="button" on:click={addAddress} class="leading-[normal] drop-shadow-lg text-blue-600 text-left flex justify-center items-center self-stretch mb-1">+ add address</button>
                     </div>
                     <div id="date_time" class="flex gap-x-4 mb-4 ">
                         <div class="w-1/2 drop-shadow flex gap-x-4 py-[3px] items-center bg-white pl-3 pr-2.5 justify-between rounded-3xl w-full">
@@ -53,7 +96,7 @@
                         </div>
                     </div>
                     <div id="submit_btn">
-                        <button type="submit" class="mb-4 leading-[normal] drop-shadow-lg text-white text-xl text-center flex justify-center bg-red-400 self-stretch p-3.5 rounded-3xl w-full">Search</button> <!-- Added w-full -->
+                        <button type="submit" class="mb-4 leading-[normal] drop-shadow-lg text-white text-xl text-center flex justify-center bg-red-400 self-stretch p-3.5 rounded-3xl w-full">Search</button>
                     </div>
                 </div>
             </form>
