@@ -1,7 +1,7 @@
 # 11BLISS
 **Welcome to the repository BlissPulse🔥 where a salesman does not have to travel NP-hard 🌠**
 
-
+![Demo](./screenshots/bliss-pulse-screenshot.png)
 
 # What is BlissPulse 🚀
 BlissPulse🔥 is the last app you need to plan your meetings and activites.  
@@ -46,4 +46,4 @@ cd frontend && npm install && npm i- D npm install -D tailwindcss postcss autopr
 
 ## Deploying in the Cloud 
 
-You can use any CloudProvider you want. We recommend to decouple the frontend and backend deployments, even though you may also deploy them in a single machine. 💪🧨
+You can use any cloud provider you want. We recommend to decouple the frontend and backend deployments, even though you may also deploy them in a single machine. 💪🧨
