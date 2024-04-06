@@ -1,10 +1,12 @@
 <script>
+
    let container;
    let map;
-   let zoom = 13.2;
+   let zoom = 12;
    let center = {lat: 52.51888443, lng: 13.39384};
    export let heatmapData;
    export let renderHeatmap;
+   export let startLoc;
    import retro_style from './map-styles.js'
    import { onMount } from 'svelte';
    import { ENV_OBJ } from './env.js';
@@ -13,7 +15,9 @@
 		map = new google.maps.Map(container, {
 			zoom,
 			center,
-			styles: retro_style
+			styles: retro_style,
+			minZoom: 12,
+			maxDefaultZoom: 12, 
 		});
         const transitLayer = new google.maps.TransitLayer();
 
@@ -21,6 +25,35 @@
 	});
 
 	function plotHeatmap() {
+		console.log("Start mapping heatmap");
+		heatmapData = heatmapData.map((data) => {
+			return {location: new google.maps.LatLng(data[0], data[1]), weight: data[2]}
+		});
+		console.log("Done mapping heatmap");
+
+		var heatmap = new google.maps.visualization.HeatmapLayer({
+			data: heatmapData,
+			dissipating: true,
+			opacity: 0.5,
+			maxIntensity: 14000,
+		});
+		console.log("heatmap layer created");
+		heatmap.setMap(map);
+		console.log(startLoc);
+		let cityCircle = new google.maps.Circle({
+			strokeColor: "rgb(0,0,0)",
+			strokeOpacity: 0.8,
+			strokeWeight: 0,
+			fillColor: "rgb(0,0,0)",
+			fillOpacity: 1,
+			map,
+			center: { lat: startLoc.lat, lng: startLoc.lng },
+			radius: 100
+		});
+
+		console.log("heatmap layer set");
+	}
+	function plotPoints() {
 		let vals = heatmapData.reduce(
 			(acc, val) => {
 				return [Math.min(acc[0], val[2]), Math.max(acc[1], val[2])];
