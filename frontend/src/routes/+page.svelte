@@ -8,7 +8,7 @@
 
 <nav class={`border-b-2 border-slate-950`}>
     <div id="logo-container" class={`tracking-[0px] font-futura items-start bg-red-100 gap-y-14 flex-col pb-5 pl-11 pr-14 pt-4 inline-flex w-full`}>
-        <img src="logo-bliss-pulse.svg" alt="blisspuls-logo" width="20%">
+        <img src="logo-bliss-pulse-sonnenbrille.png" alt="blisspuls-logo" width="20%">
     </div>
 </nav>
 <div

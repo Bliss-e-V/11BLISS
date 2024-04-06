@@ -6,3 +6,11 @@ HackHPI Repo of Team 3
 ```bash
 npm install -D tailwindcss postcss autoprefixer
 ```
+
+# Was macht es
+
+# Welche Technologien 
+
+# Screenshots
+
+# Emojis 
