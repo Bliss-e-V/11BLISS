@@ -1,4 +1,5 @@
 <script>
+	import retro_style from './map-styles.js';
 	export let heatmapData;
 	export let renderHeatmap;
 	// const { HeatmapLayer, WeightedLocation } = google.maps.importLibrary('visualization');
@@ -13,7 +14,8 @@
 	onMount(async () => {
 		map = new google.maps.Map(container, {
 			zoom,
-			center
+			center,
+			styles: retro_style
 		});
 	});
 
@@ -63,14 +65,13 @@
 	</script>
 </svelte:head>
 
-<div id="map" class="full-screen" bind:this={container}></div>
+<div id="map" class="full-screen m-auto h-full" bind:this={container}></div>
 
 {#if renderHeatmap}
-	{plotHeatmap()}
-	<p>heatmap rendered</p>
-{:else}
-	<p>No Heatmap yet</p>
-{/if}
+	<p class="hidden">
+		{plotHeatmap()}
+	</p>
+{:else}{/if}
 
 <style>
 	.full-screen {
