@@ -47,3 +47,5 @@ cd frontend && npm install && npm i- D npm install -D tailwindcss postcss autopr
 ## Deploying in the Cloud 
 
 You can use any cloud provider you want. We recommend to decouple the frontend and backend deployments, even though you may also deploy them in a single machine. 💪🧨
+
+Made with 🖤 and supersonic prototyping ✈️ in Berlin
