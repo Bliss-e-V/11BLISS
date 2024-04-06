@@ -52,7 +52,7 @@
 		};
 		return fetch('http://localhost:5000/geocoding?search=' + address, opts)
 			.then((response) => response.json())
-			.then((data) => {
+			.then(async (data) => {
 				return data;
 			});
 	}

@@ -1,13 +1,11 @@
 import os
+from pathlib import Path
 
 import requests
+from config import MAPS_API_KEY
+from dotenv import load_dotenv
 from flask import Flask, request
 from flask_cors import CORS
-from pathlib import Path
-from dotenv import load_dotenv
-from get_distance import get_grid_times
-
-from config import MAPS_API_KEY
 from get_distance import get_grid_times
 
 app = Flask(__name__)

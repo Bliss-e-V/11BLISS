@@ -1,10 +1,12 @@
 <script>
+	import { json } from '@sveltejs/kit';
 	import './+layout.svelte';
 	import Map from './Map.svelte';
 	import SearchForm from './SearchForm.svelte'; // Import the new components
 
-	let heatmapData = [[52, 13, 10]]; // Initialize heatmapData as an empty array
+	let heatmapData = []; // Initialize heatmapData as an empty array
 	let renderHeatmap = false;
+	let startLoc = null;
 </script>
 
 <nav>
@@ -26,10 +28,12 @@
 
 				// Handle the submission event, event.detail.geocode contains the geocode result
 				console.log(event.detail.geocode);
+				startLoc = event.detail.geocode;
 				heatmapData = await fetch(
 					`http://localhost:5000/gridtimes?starts=[(${event.detail.geocode.lat},${event.detail.geocode.lng})]`
-				).then((data) => {
-					return data.json(); // Update the heatmapData variable with the fetched data
+				).then(async (data) => {
+					let dataJson = await data.json();
+					return dataJson; // Update the heatmapData variable with the fetched data
 				});
 
 				renderHeatmap = true; // Set renderHeatmap to true to display the heatmap
@@ -38,7 +42,7 @@
 	</div>
 
 	<div id="right-container">
-		<Map {heatmapData} {renderHeatmap} />
+		<Map {heatmapData} {renderHeatmap} {startLoc} />
 	</div>
 </div>
 
