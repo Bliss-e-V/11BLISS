@@ -170,7 +170,7 @@ cython_debug/
 test.csv
 todo.md
 node_modules/
-
+.idea/
 
 
 
