@@ -73,6 +73,7 @@ def grid_times():
                     return "Invalid starts argument", 400
                 starts = tuple([GeoPoint(start[0], start[1]) for start in starts])
                 geo_point_grid = compute_geo_point_grid(starts, average_mode)
+                geo_point_grid = [point.to_tuple() for point in geo_point_grid]
                 return (geo_point_grid, 200)
 
             else:
